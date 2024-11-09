@@ -1,5 +1,5 @@
-.container__big-card{
-	/* border: solid #FFF .2rem; */
+/*.container__big-card{
+	border: solid #FFF .2rem; 
 	margin-left: 2rem;
 	margin-right: 2rem;
 	width: 40rem;
@@ -27,4 +27,65 @@
 .big-card__photo > img{
 	width: 100%;
 	min-width: 40rem;
-}
+}*/
+
+.big-card-container {
+	text-align: center;
+	padding: 1rem;
+  }
+  
+  .title {
+	margin-bottom: 1rem;
+	font-size: 2rem;
+	font-family: 'Arvo', sans-serif;
+  }
+  
+  .image-container {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  }
+  
+  .big-card-image {
+	width: 90%;
+	cursor: pointer;
+  }
+  
+  .arrow {
+	background: none;
+	border: none;
+	font-size: 3rem;
+	color: #fff;
+	cursor: pointer;
+	position: absolute;
+  }
+  
+  .left {
+	left: 5%;
+  }
+  
+  .right {
+	right: 5%;
+  }
+  
+  .indicators {
+	margin-top: 1rem;
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+  }
+  
+  .indicators span {
+	width: 20px;
+	height: 20px;
+	background-color: #fff;
+	border: 2px solid #0c56c4;
+	border-radius: 50%;
+	display: inline-block;
+  }
+  
+  .indicators .active {
+	background-color: #dd0606;
+  }
+  

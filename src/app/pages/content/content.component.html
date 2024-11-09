@@ -1,4 +1,4 @@
-<div class="container__menu-voltar">
+<!-- <div class="container__menu-voltar">
 	<a [routerLink]="['']"> << VOLTAR</a>
 </div>
 
@@ -16,4 +16,25 @@
 		<p>{{contentDescription}}</p>
 	</div>
 
-</div>
+</div> -->
+
+<div *ngIf="article" class="content-container">
+	<img [src]="article.photoCover" alt="{{ article.cardTitle }}" class="content-image">
+	<h1>{{ article.cardTitle }}</h1>
+	<p>{{ article.releaseYear }}</p>
+	<p>{{ article.genre }}</p>
+	<p>{{ article.duration }}</p>
+	<div class="ratings">
+	  <span class="stars">{{ '★'.repeat(article.ratings) }}{{ '☆'.repeat(5 - article.ratings) }}</span>
+	  <span>{{ article.reviewCount }} avaliações</span>
+	</div>
+	<p><strong>Elenco:</strong> {{ article.cast.join(', ') }}</p>
+	<p><strong>Diretores:</strong> {{ article.directors.join(', ') }}</p>
+	<p><strong>Roteiristas:</strong> {{ article.writers.join(', ') }}</p>
+	<p><strong>Sinopse:</strong> {{ article.synopsis }}</p>
+	<div *ngIf="article.seasons">
+	  <p><strong>Temporadas:</strong> {{ article.seasons }}</p>
+	  <p><strong>Episódios:</strong> {{ article.episodes }}</p>
+	</div>
+  </div>
+  

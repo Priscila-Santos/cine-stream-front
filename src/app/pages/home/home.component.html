@@ -1,52 +1,20 @@
-
-<app-menu-title></app-menu-title>
-
 <div class="container__articles">
+  <div class="articles__main">
+    <app-big-card 
+      *ngIf="mainArticle"
+      [title]="mainArticle.cardTitle" 
+      [photoCover]="mainArticle.photoCover" 
+      [id]="mainArticle.id">
+    </app-big-card>
+  </div>
 
-	<div class="articles__main">
-
-		<app-big-card
-		id="1"
-		photoCover="https://images.thedirect.com/media/article_full/new-black-panther-mcu-marvel.jpg"
-		cardTitle="Black Panther"
-		cardDescription="Conheça a história de T'Challa, príncipe do reino de Wakanda, que perde o seu pai e viaja para os Estados Unidos, onde tem contato com os Vingadores. Entre as suas habilidades estão a velocidade, inteligência e os sentidos apurados."
-
-		> </app-big-card>
-
-	</div>
-
-	<div class="articles__others">
-
-		<app-small-card
-		id="2"
-		photoCover="https://colunaboraviajar.com.br/wp-content/uploads/2022/05/thor.jpg"
-		cardTitle="Thor - Love and Thunder "
-			></app-small-card>
-
-			<app-small-card
-			id="3"
-			photoCover="https://www.10wallpaper.com/wallpaper/3840x2400/2106/Loki_Thor_Ragnarok_2021_Newest_Game_HD_Poster_3840x2400.jpg"
-			cardTitle="Loki "
-				></app-small-card>
-
-				<app-small-card
-				id="4"
-				photoCover="https://s2-epocanegocios.glbimg.com/7s7FK36N3L0S1V2wuLH_qkUwAp0=/0x0:1200x675/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_e536e40f1baf4c1a8bf1ed12d20577fd/internal_photos/bs/2023/v/H/anNHoyRmSUK2rTF9QnCA/scale.jpeg"
-				cardTitle="Guardiões da Galáxia "
-					></app-small-card>
-
-
-	</div>
-
+  <div class="articles__others">
+    <div *ngFor="let genre of genres">
+      <app-small-card 
+        [genre]="genre" 
+        [articles]="articlesByGenre[genre]">
+      </app-small-card>
+    </div>
+  </div>
 </div>
 
-<!-- <h1>NOVIDADES</h1>
-<hr>
-<div class="articles__others">
-
-	<app-small-card></app-small-card>
-	<app-small-card></app-small-card>
-	<app-small-card></app-small-card>
-
-
-</div> -->

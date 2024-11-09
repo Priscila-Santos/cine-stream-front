@@ -1,24 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Article } from 'src/app/services/article.service';
 
 @Component({
   selector: 'app-small-card',
   templateUrl: './small-card.component.html',
   styleUrls: ['./small-card.component.css']
 })
-export class SmallCardComponent implements OnInit {
+export class SmallCardComponent {
+  @Input() genre: string = '';
+  @Input() articles: Article[] = [];
 
-	@Input()
-	photoCover:string = ''
+  currentIndex: number = 0;
 
-	@Input()
-	cardTitle:string = ''
-
-	@Input()
-	id:string = '0'
-
-  constructor() { }
-
-  ngOnInit(): void {
+  previous() {
+    this.currentIndex = (this.currentIndex - 1 + this.articles.length) % this.articles.length;
   }
 
+  next() {
+    this.currentIndex = (this.currentIndex + 1) % this.articles.length;
+  }
 }

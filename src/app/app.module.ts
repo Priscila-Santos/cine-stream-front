@@ -9,6 +9,21 @@ import { BigCardComponent } from './components/big-card/big-card.component';
 import { SmallCardComponent } from './components/small-card/small-card.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ContentComponent } from './pages/content/content.component';
+import { HttpClientModule } from '@angular/common/http';
+import { SearchDialogComponent } from './components/search-dialog/search-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog'; import { FormsModule } from '@angular/forms'
+import { RouterModule, Routes } from '@angular/router';
+import { ProductionComponent } from './pages/production/production.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+
+
+const appRoutes = [
+
+  { path: 'content/:id', component: ContentComponent },
+  { path: 'productions/:genre', component: ProductionComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: '', component: HomeComponent }
+]
 
 @NgModule({
   declarations: [
@@ -18,13 +33,22 @@ import { ContentComponent } from './pages/content/content.component';
     BigCardComponent,
     SmallCardComponent,
     HomeComponent,
-    ContentComponent
+    ContentComponent,
+    SearchDialogComponent,
+    ProductionComponent,
+    ProfileComponent
+  
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    MatDialogModule,
+    FormsModule,
+    RouterModule.forRoot(appRoutes) // configurar as rotas
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [SearchDialogComponent]
 })
 export class AppModule { }

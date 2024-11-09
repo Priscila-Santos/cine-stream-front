@@ -1,0 +1,27 @@
+<div class="profile-container">
+    <h2>Perfil do Usuário</h2>
+    
+    <div class="avatar-section">
+      <h3>Escolha seu Avatar</h3>
+      <div class="avatars">
+        <div class="avatar" *ngFor="let avatar of avatars" (click)="selectAvatar(avatar)">
+          <img [src]="avatar.url" [alt]="avatar.name" [class.selected]="avatar.selected">
+        </div>
+      </div>
+    </div>
+  
+    <div class="current-avatar">
+      <h3>Seu Avatar Atual</h3>
+      <img [src]="currentAvatar.url" [alt]="currentAvatar.name">
+    </div>
+  
+    <div class="genres-section">
+      <h3>Escolha seus Gêneros Favoritos</h3>
+      <div class="genres">
+        <div class="genre" *ngFor="let genre of genres" (click)="toggleGenre(genre)" [class.selected]="genre.selected">
+          {{ genre.name }}
+        </div>
+      </div>
+    </div>
+  </div>
+  

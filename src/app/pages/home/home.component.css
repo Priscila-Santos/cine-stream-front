@@ -1,7 +1,13 @@
-.container__articles{
-	margin-top: 3rem;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-}
+.container__articles {
+	padding: 1rem;
+  }
+  
+  .articles__main {
+	margin-bottom: 2rem;
+  }
+  
+  .articles__others > div {
+	margin-bottom: 2rem;
+  }
+  
 

@@ -1,34 +1,15 @@
-<div class="container__small-card">
-
-	<div class="container__small-card-content">
-
-		<div class="small-card__photo">
-
-			<img src="{{ photoCover }}" alt="" srcset=""
-			height="200px"
-			>
-
-			</div>
-
-			<div class="small-card__title">
-
-				<h1> <a [routerLink]="['content', id]"> {{cardTitle}} </a> </h1>
-
-			</div>
-
-	</div>
-
-	<div class="container__small-card-separator">
-		<hr>
+<div class="small-card-container">
+	<h2 class="genre-title">{{ genre }}</h2>
+	<div class="image-container">
+	  <button class="arrow left" (click)="previous()">&#9664;</button>
+	  <div class="images">
+		<div class="image" *ngFor="let article of articles.slice(currentIndex, currentIndex + 4)">
+		  <img [src]="article.photoCover" alt="{{ article.cardTitle }}" class="small-card-image" />
+		  <h3 class="small-car-title">
+			<a [routerLink]="['content', article.id]">{{ article.cardTitle }}</a></h3>
 		</div>
-
-		<!-- <div class="small-card__description">
-
-			<p> <a href="#"> Descrição da noticia. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a rutrum quam. Praesent dapibus, urna vitae eleifend iaculis, libero dui luctus neque, faucibus bibendum nunc lectus non enim. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi hendrerit purus nisl. </a> </p>
-
-		</div> -->
-
-</div>
-
-
-
+	  </div>
+	  <button class="arrow right" (click)="next()">&#9654;</button>
+	</div>
+  </div>
+  

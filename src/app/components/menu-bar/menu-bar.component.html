@@ -1,12 +1,14 @@
-<div class="container__menu-bar">
+<div class="menu-bar">
+	<img class="logo" alt="Logo" src="assets/img/logo.png">
+	
+	<nav class="nav-links">
+	  <a routerLink="/" routerLinkActive="active-link" class="link">Home</a>
+	  <a routerLink="/filmes" routerLinkActive="active-link" class="link">Filmes</a>
+	  <a routerLink="/series" routerLinkActive="active-link" class="link">Series</a>
+	  <a routerLink="/minha-lista" routerLinkActive="active-link" class="link">Minha Lista</a>
+	</nav>
+	<div class="icons"> <img class="search-icon" src="assets/svg/search-icon.svg" alt="Search" (click)="openSearchDialog()"> <img class="profile-icon" [src]="avatarUrl" alt="Profile" (click)="goToProfile()"> 
+	</div>
 
-	<ul>
-		<li><a href="https://www.linkedin.com/in/priscila-santos-6753a2218/">LinkedIn</a></li>
-
-		<li><a href="https://github.com/Priscila-Santos">Github</a></li>
-		<!-- <li><span>•</span></li> -->
-		<li><a href="https://sites.google.com/view/priscila-santos/p%C3%A1gina-inicial">Portfólio</a></li>
-
-	</ul>
-
-</div>
+  </div>
+  

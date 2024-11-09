@@ -1,23 +1,13 @@
-<div class="container__big-card">
-
-	<div class="big-card__photo">
-
-	<img src= "{{	photoCover }}" alt="" srcset=""
-
-	>
-
+   <div class="big-card-container">
+	<h1 class="title">{{ title }}</h1>
+	<div class="image-container">
+	  <button class="arrow left" (click)="previous()">&#9664;</button>
+	  <img [src]="photoCover" alt="{{ title }}" class="big-card-image" (click)="goToContent()" />
+	  <button class="arrow right" (click)="next()">&#9654;</button>
 	</div>
-
-	<div class="big-card__title">
-
-		<h1> <a [routerLink]="['content', id]"> {{cardTitle}} </a> </h1>
-
+	<div class="indicators">
+	  <span *ngFor="let i of [].constructor(totalItems); let index = index"
+			[ngClass]="{'active': currentIndex === index}"></span>
 	</div>
-
-	<div class="big-card__description">
-
-		<p> <a [routerLink]="['content', id]"> {{cardDescription}} </a> </p>
-
-	</div>
-
-</div>
+  </div>
+  

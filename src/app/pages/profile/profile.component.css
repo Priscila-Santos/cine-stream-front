@@ -1,0 +1,64 @@
+.profile-container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .avatar-section, .genres-section {
+    margin-bottom: 2rem;
+  }
+  
+  .avatars {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .avatar {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+  }
+  
+  .avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+  }
+  
+  .avatar.selected {
+    border-color: green;
+  }
+  
+  .current-avatar {
+    margin-bottom: 2rem;
+  }
+  
+  .current-avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+  }
+  
+  .genres {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .genre {
+    cursor: pointer;
+    background-color: orange;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    width: 18%;
+    text-align: center;
+    transition: background-color 0.3s;
+  }
+  
+  .genre.selected {
+    background-color: green;
+  }
+  

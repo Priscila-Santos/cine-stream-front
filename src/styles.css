@@ -1,12 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
-*{
+body, html{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #111;
+  background:  linear-gradient(180deg, #270c24, #2a0d26 80%, #8d2b82);
+  /* background-color: #170545; */
 	color: #FFF;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Arvo', sans-serif;
+	
 }
+
 
 a{
 	text-decoration: none;
