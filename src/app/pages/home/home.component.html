@@ -11,8 +11,8 @@
   <div class="articles__others">
     <div *ngFor="let genre of genres">
       <app-small-card 
-        [genre]="genre" 
-        [articles]="articlesByGenre[genre]">
+        [genre]="genre.name" 
+        [articles]="articlesByGenre[genre.name]">
       </app-small-card>
     </div>
   </div>

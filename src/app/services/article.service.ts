@@ -41,3 +41,8 @@ export interface Article {
   seasons?: number; 
   episodes?: number
 }
+
+export interface Genre {
+  id: string;
+  name: string;
+}

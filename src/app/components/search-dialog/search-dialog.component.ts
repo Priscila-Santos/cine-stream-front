@@ -7,11 +7,11 @@ import { MatDialogRef} from '@angular/material/dialog';
   styleUrls: ['./search-dialog.component.css']
 })
 export class SearchDialogComponent {
-  searchQuery: string = '';
+  searchQuery: string = ' ';
 
   constructor(public dialogRef: MatDialogRef<SearchDialogComponent>) {}
 
-  search() {
+  onSearch() {
     this.dialogRef.close(this.searchQuery);
   }
 }

@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateAvatarUrl();
-    this.currentAvatar.url = this.avatarService.getAvatar();
+    // this.currentAvatar.url = this.avatarService.getAvatar();
     
   }
 

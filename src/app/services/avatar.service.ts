@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class AvatarService {
   private avatarUrl: string = 'assets/img/avatar.png'; // URL padrão do avatar
 
-  constructor() { }
+  //constructor() { }
 
   getAvatar(): string {
     return this.avatarUrl;
