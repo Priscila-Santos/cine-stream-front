@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Article } from 'src/app/services/article.service';
+import { Article } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-small-card',

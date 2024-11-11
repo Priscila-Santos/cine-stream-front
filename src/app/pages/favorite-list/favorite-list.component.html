@@ -1,0 +1,25 @@
+<div *ngIf="articles.length > 0" class="production-container">
+    <div *ngFor="let article of paginatedArticles" class="production-item">
+      <img [src]="article.photoCover" alt="{{ article.cardTitle }}" class="production-image">
+      <div class="production-details">
+        <h2><a [routerLink]="['/content', article.id]">{{ article.cardTitle }}</a></h2>
+        <p>Ano de Lançamento: {{ article.releaseYear }}</p>
+        <p>Duração: {{ article.duration }}</p>
+        <p>Classificação: {{ article.genre }}</p>
+        <div *ngIf="article.seasons">
+          <p>Temporadas: {{ article.seasons }}</p>
+          <p>Episódios: {{ article.episodes }}</p>
+        </div>
+        <button (click)="toggleFavorite(article)" class="favorite-button">
+          <span *ngIf="!isFavorite(article)">♡</span>
+          <span *ngIf="isFavorite(article)" class="favorite-active">♥</span>
+        </button>
+      </div>
+    </div>
+  
+    <div class="pagination">
+      <button (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+      <button (click)="nextPage()" [disabled]="(currentPage * itemsPerPage) >= articles.length">Próximo</button>
+    </div>
+  </div>
+  

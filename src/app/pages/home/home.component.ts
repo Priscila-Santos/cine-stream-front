@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ArticleService, Article, Genre } from 'src/app/services/article.service';
+import { ArticleService, Article, Genre } from 'src/app/services/data.service';
 @Component({ 
   selector: 'app-home', 
   templateUrl: './home.component.html', 

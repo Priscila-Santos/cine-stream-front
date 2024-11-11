@@ -1,35 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ArticleService, Article } from 'src/app/services/data.service';
 import { FavoriteService } from 'src/app/services/favorite.service';
+import { Article } from 'src/app/services/data.service';
 
 @Component({
-  selector: 'app-production',
-  templateUrl: './production.component.html',
-  styleUrls: ['./production.component.css']
+  selector: 'app-favorite-list',
+  templateUrl: './favorite-list.component.html',
+  styleUrls: ['./favorite-list.component.css']
 })
-export class ProductionComponent implements OnInit {
+export class FavoriteListComponent implements OnInit {
   articles: Article[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 15;
 
-  constructor(
-    private route: ActivatedRoute,
-    private articleService: ArticleService,
-    private favoriteService: FavoriteService
-  ) {}
+  constructor(private favoriteService: FavoriteService) {}
 
   ngOnInit(): void {
-    const genre = this.route.snapshot.paramMap.get('genre');
-    if (genre) {
-      this.articleService.getArticlesByGenre(genre).subscribe((articles: Article[]) => {
-        this.articles = articles;
-      });
-    } else {
-      this.articleService.getArticles().subscribe((articles: Article[]) => {
-        this.articles = articles;
-      });
-    }
+    this.articles = this.favoriteService.getFavorites();
   }
 
   get paginatedArticles(): Article[] {
@@ -50,14 +36,14 @@ export class ProductionComponent implements OnInit {
   }
 
   toggleFavorite(article: Article): void {
-    if (this.isFavorited(article)) {
+    if (this.isFavorite(article)) {
       this.favoriteService.removeFavorite(article);
     } else {
       this.favoriteService.addFavorite(article);
     }
   }
 
-  isFavorited(article: Article): boolean {
+  isFavorite(article: Article): boolean {
     return this.favoriteService.getFavorites().some(fav => fav.id === article.id);
   }
 }

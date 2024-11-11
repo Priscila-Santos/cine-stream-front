@@ -15,6 +15,7 @@ import { MatDialogModule } from '@angular/material/dialog'; import { FormsModule
 import { RouterModule, Routes } from '@angular/router';
 import { ProductionComponent } from './pages/production/production.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { FavoriteListComponent } from './pages/favorite-list/favorite-list.component';
 
 
 const appRoutes = [
@@ -36,7 +37,8 @@ const appRoutes = [
     ContentComponent,
     SearchDialogComponent,
     ProductionComponent,
-    ProfileComponent
+    ProfileComponent,
+    FavoriteListComponent
   
   ],
   imports: [

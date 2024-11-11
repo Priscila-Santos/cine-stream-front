@@ -24,6 +24,13 @@ export class ArticleService {
 }
 
 
+export interface Type {
+  filme: string;
+  serie: string;
+  realityShow: string;
+  favoritos: string;
+}
+
 export interface Article {
   id: string;
   photoCover: string;
