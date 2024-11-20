@@ -1,8 +1,8 @@
-# CineStream 🎬
+# CineStream 
 
 CineStream é um projeto que utiliza dados da API TMDb para fornecer informações detalhadas sobre filmes e séries. Esta fase do projeto substitui o uso de arquivos CSV do módulo passado por um banco de dados real H2, proporcionando uma experiência mais robusta e escalável. O front-end foi desenvolvido em Angular para se integrar ao back-end feito com Spring Boot Java Maven.
 
-## Descrição do Projeto 📜
+## Descrição do Projeto 
 O CineStream permite ao usuário:
 
 Buscar filmes e séries por nome
@@ -15,7 +15,7 @@ Exibir a melhor avaliação de filmes e séries
 
 Visualizar informações detalhadas sobre filmes e séries
 
-## Front-end com Angular 📱
+## Front-end com Angular 
 ### 1. Criação do Projeto Angular
 Para a criação de um projeto Angular é necessário instalar o Angular CLI:
 
@@ -137,7 +137,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 }
 ```
-## Execução do Projeto 📀
+## Execução do Projeto 
 ### 1. Inicializar o Back-end
 Executar o projeto Spring Boot:
 
@@ -198,7 +198,7 @@ A aplicação Angular estará disponível em http://localhost:4200, comunicando-
 `service`: Lógica de negócio para manipulação de filmes e séries.
 
 
-## Conclusão 🔚
+## Conclusão 
 O CineStream demonstra como integrar um front-end Angular com um back-end em Spring Boot, utilizando um banco de dados real H2 e obtendo dados de uma API externa como a TMDb. Esperamos que o CineStream seja útil e inspire outros desenvolvedores a explorar e utilizar essas técnicas em seus próprios projetos. Se tiver alguma dúvida ou sugestão, sinta-se à vontade para entrar em contato!
 
 ## Realizadores do Projeto 💡

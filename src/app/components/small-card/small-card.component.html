@@ -1,5 +1,5 @@
-<div class="small-card-container">
-	<h2 class="genre-title">{{ genre }}</h2>
+<div class="small-card-container" *ngFor="let genre of genres">
+	<h2 class="genre-title">{{ genre.name }}</h2>
 	<div class="image-container">
 	  <button class="arrow left" (click)="previous()">&#9664;</button>
 	  <div class="images">
