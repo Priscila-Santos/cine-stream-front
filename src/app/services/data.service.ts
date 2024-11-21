@@ -11,6 +11,22 @@ export class ArticleService {
 
   constructor(private http: HttpClient) { }
 
+  getAllMovies(page: number = 1): Observable<Article[]> {
+    return this.http.get<Article[]>(`${this.apiUrl}/filmes/todos?page=${page}`);
+  }
+
+  getAllSeries(page: number = 1): Observable<Article[]> { return this.http.get<Article[]>(`${this.apiUrl}/series/todas?page=${page}`);
+  }
+
+  getMoviesByTitle(title: string, page: number = 1): Observable<Article[]> {
+    return this.http.get<Article[]>(`${this.apiUrl}/filmes?titulo=${title}&page=${page}`);
+  }
+
+  getSeriesByTitle(title: string, page: number = 1): Observable<Article[]> { 
+    return this.http.get<Article[]>(`${this.apiUrl}/series?titulo=${title}&page=${page}`); 
+  }
+
+
   getArticles(): Observable<Article[]> {
     return this.http.get<Article[]>(this.apiUrl);
   }

@@ -20,6 +20,17 @@ export class ProductionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const type = this.route.snapshot.paramMap.get('type');
+    if(type === 'movies') {
+      this.articleService.getAllMovies().subscribe((articles: Article[]) => {
+        this.articles = articles;
+      });
+    } else if (type === 'series') {
+      this.articleService.getAllSeries().subscribe((articles: Article[]) => {
+        this.articles = articles;
+      });
+    }
+
     const genre = this.route.snapshot.paramMap.get('genre');
     if (genre) {
       this.articleService.getArticlesByGenre(genre).subscribe((articles: Article[]) => {
