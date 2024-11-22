@@ -1,35 +1,3 @@
-// import { Component, Input, OnInit } from '@angular/core';
-// import { Article } from 'src/app/services/article.service';
-
-// @Component({
-//   selector: 'app-big-card',
-//   templateUrl: './big-card.component.html',
-//   styleUrls: ['./big-card.component.css']
-// })
-// export class BigCardComponent implements OnInit {
-
-// 	@Input()
-// 	article: Article | undefined;
-
-// 	@Input()
-// 	photoCover:string = ''
-
-// 	@Input()
-// 	cardTitle:string = ''
-
-// 	@Input()
-// 	cardDescription:string = ''
-
-// 	@Input()
-// 	id:string = '0'
-
-//   constructor() { }
-
-//   ngOnInit(): void {
-//   }
-
-// }
-
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 

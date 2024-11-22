@@ -1,12 +1,13 @@
-<div class="small-card-container" *ngFor="let genre of genres">
-	<h2 class="genre-title">{{ genre.name }}</h2>
+<div class="small-card-container">
+	<h2 class="genre-title">{{ genre }}</h2>
 	<div class="image-container">
 	  <button class="arrow left" (click)="previous()">&#9664;</button>
 	  <div class="images">
 		<div class="image" *ngFor="let article of articles.slice(currentIndex, currentIndex + 4)">
 		  <img [src]="article.photoCover" alt="{{ article.cardTitle }}" class="small-card-image" />
-		  <h3 class="small-car-title">
-			<a [routerLink]="['content', article.id]">{{ article.cardTitle }}</a></h3>
+		  <h3 class="small-card-title">
+			<a [routerLink]="['content', article.id]">{{ article.cardTitle }}</a>
+		  </h3>
 		</div>
 	  </div>
 	  <button class="arrow right" (click)="next()">&#9654;</button>

@@ -16,15 +16,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProductionComponent } from './pages/production/production.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { FavoriteListComponent } from './pages/favorite-list/favorite-list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
-const appRoutes = [
+// const appRoutes = [
 
-  { path: 'content/:id', component: ContentComponent },
-  { path: 'productions/:genre', component: ProductionComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: '', component: HomeComponent }
-]
+//   { path: 'content/:id', component: ContentComponent },
+//   { path: 'productions/:genre', component: ProductionComponent },
+//   { path: 'profile', component: ProfileComponent },
+//   { path: '', component: HomeComponent }
+// ]
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ const appRoutes = [
     HttpClientModule,
     MatDialogModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes) // configurar as rotas
+    // RouterModule.forRoot(appRoutes),
+    BrowserAnimationsModule // configurar as rotas
   ],
   providers: [],
   bootstrap: [AppComponent],
