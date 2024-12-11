@@ -1,23 +1,23 @@
-<div *ngIf="articles.length > 0" class="production-container">
-  <div *ngFor="let article of paginatedArticles" class="production-item">
-    <img [src]="article.photoCover" alt="{{ article.cardTitle }}" class="production-image">
+<div *ngIf="data && data.length > 0" class="production-container">
+  <div *ngFor="let item of paginatedArticles" class="production-item">
+    <img [src]="item.photoCover" alt="{{ item.cardTitle }}" class="production-image">
     <div class="production-details">
-      <h2><a [routerLink]="['/content', article.id]">{{ article.cardTitle }}</a></h2>
-      <p>Ano de Lançamento: {{ article.releaseYear }}</p>
-      <p>Duração: {{ article.duration }}</p>
-      <p>Classificação: {{ article.genre }}</p>
-      <div *ngIf="article.seasons">
-        <p>Temporadas: {{ article.seasons }}</p>
-        <p>Episódios: {{ article.episodes }}</p>
+      <h2><a [routerLink]="['/content', item.id]">{{ item.cardTitle }}</a></h2>
+      <p>Ano de Lançamento: {{ item.releaseYear }}</p>
+      <p>Duração: {{ item.duration }}</p>
+      <p>Classificação: {{ item.genre }}</p>
+      <div *ngIf="item.seasons">
+        <p>Temporadas: {{ item.seasons }}</p>
+        <p>Episódios: {{ item.episodes }}</p>
       </div>
-      <button (click)="toggleFavorite(article)" class="favorite-button">
-        <i [class]="isFavorited(article) ? 'far fa-heart' : 'far fa-heart'"></i>
+      <button (click)="toggleFavorite(item)" class="favorite-button">
+        <i [class]="isFavorited(item) ? 'far fa-heart' : 'far fa-heart'"></i>
       </button>
     </div>
   </div>
 
   <div class="pagination">
     <button (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
-    <button (click)="nextPage()" [disabled]="(currentPage * itemsPerPage) >= articles.length">Próximo</button>
+    <button (click)="nextPage()" [disabled]="(currentPage * itemsPerPage) >= data.length">Próximo</button>
   </div>
 </div>

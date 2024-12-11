@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ArticleService, Article } from 'src/app/services/data.service';
+import { DataService, Data } from 'src/app/services/data.service';
 import { FavoriteService } from 'src/app/services/favorite.service';
 
 @Component({
@@ -9,47 +9,42 @@ import { FavoriteService } from 'src/app/services/favorite.service';
   styleUrls: ['./production.component.css']
 })
 export class ProductionComponent implements OnInit {
-  articles: Article[] = [];
+  data: Data[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 15;
 
   constructor(
     private route: ActivatedRoute,
-    private articleService: ArticleService,
+    private dataService: DataService,
     private favoriteService: FavoriteService
   ) {}
 
   ngOnInit(): void {
-    const type = this.route.snapshot.paramMap.get('type');
-    if(type === 'movies') {
-      this.articleService.getAllMovies().subscribe((articles: Article[]) => {
-        this.articles = articles;
+    // Acessa o tipo diretamente da rota
+    const type = this.route.snapshot.data['type'];
+
+    if (type === 'movies') {
+      this.dataService.getAllMovies().subscribe((data: Data[]) => {
+        this.data = data || [];
+      }, error => {
+        console.error('Erro ao buscar filmes:', error);
       });
     } else if (type === 'series') {
-      this.articleService.getAllSeries().subscribe((articles: Article[]) => {
-        this.articles = articles;
-      });
-    }
-
-    const genre = this.route.snapshot.paramMap.get('genre');
-    if (genre) {
-      this.articleService.getArticlesByGenre(genre).subscribe((articles: Article[]) => {
-        this.articles = articles;
-      });
-    } else {
-      this.articleService.getArticles().subscribe((articles: Article[]) => {
-        this.articles = articles;
+      this.dataService.getAllSeries().subscribe((data: Data[]) => {
+        this.data = data || [];
+      }, error => {
+        console.error('Erro ao buscar séries:', error);
       });
     }
   }
 
-  get paginatedArticles(): Article[] {
+  get paginatedArticles(): Data[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.articles.slice(startIndex, startIndex + this.itemsPerPage);
+    return this.data.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
   nextPage(): void {
-    if ((this.currentPage * this.itemsPerPage) < this.articles.length) {
+    if ((this.currentPage * this.itemsPerPage) < this.data.length) {
       this.currentPage++;
     }
   }
@@ -60,15 +55,15 @@ export class ProductionComponent implements OnInit {
     }
   }
 
-  toggleFavorite(article: Article): void {
-    if (this.isFavorited(article)) {
-      this.favoriteService.removeFavorite(article);
+  toggleFavorite(data: Data): void {
+    if (this.isFavorited(data)) {
+      this.favoriteService.removeFavorite(data);
     } else {
-      this.favoriteService.addFavorite(article);
+      this.favoriteService.addFavorite(data);
     }
   }
 
-  isFavorited(article: Article): boolean {
-    return this.favoriteService.getFavorites().some(fav => fav.id === article.id);
+  isFavorited(data: Data): boolean {
+    return this.favoriteService.getFavorites().some(fav => fav.id === data.id);
   }
 }

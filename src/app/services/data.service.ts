@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Type {
-  filme: string;
-  serie: string;
+  filmes: string;
+  series: string;
   realityShow: string;
   favoritos: string;
 }
 
-export interface Article {
+export interface Data {
   id: string;
   photoCover: string;
   cardTitle: string;
@@ -24,51 +24,66 @@ export interface Article {
   writers: string[]; 
   synopsis: string; 
   seasons?: number; 
-  episodes?: number
+  episodes?: number;
 }
 
 export interface Genre {
-  id: string;
+  id: number;
   name: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class ArticleService {
+export class DataService {
 
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) { }
 
-  getAllMovies(page: number = 1): Observable<Article[]> {
-    return this.http.get<Article[]>(`${this.apiUrl}/filmes/todos?page=${page}`);
+  getAllMovies(page: number = 1): Observable<Data[]> {
+    return this.http.get<Data[]>(`${this.apiUrl}/filmes/all-filmes?page=${page}`);
   }
 
-  getAllSeries(page: number = 1): Observable<Article[]> { return this.http.get<Article[]>(`${this.apiUrl}/series/todas?page=${page}`);
+  getAllSeries(page: number = 1): Observable<Data[]> {
+    return this.http.get<Data[]>(`${this.apiUrl}/series/all-series?page=${page}`);
   }
 
-  getMoviesByTitle(title: string, page: number = 1): Observable<Article[]> {
-    return this.http.get<Article[]>(`${this.apiUrl}/filmes?titulo=${title}&page=${page}`);
+  getMoviesByTitle(title: string, page: number = 1): Observable<Data[]> {
+    return this.http.get<Data[]>(`${this.apiUrl}/filmes?titulo=${title}&page=${page}`);
   }
 
-  getSeriesByTitle(title: string, page: number = 1): Observable<Article[]> { 
-    return this.http.get<Article[]>(`${this.apiUrl}/series?titulo=${title}&page=${page}`); 
+  getSeriesByTitle(title: string, page: number = 1): Observable<Data[]> { 
+    return this.http.get<Data[]>(`${this.apiUrl}/series?titulo=${title}&page=${page}`); 
+  }
+ 
+
+  getMoviesByGenre(genreId: number, page: number = 1): Observable<Data[]> {
+    return this.http.get<Data[]>(`${this.apiUrl}/filmes/por-genero?genreId=${genreId}&page=${page}`);
+  }
+  
+  
+  getGenresForMovies(): Observable<{ genres: Genre[] }> {
+    return this.http.get<{ genres: Genre[] }>(`${this.apiUrl}/filmes/genres-filmes`);
+  }
+  
+
+  getSeriesByGenre(genre: string): Observable<Data[]> {
+    return this.http.get<Data[]>(`${this.apiUrl}/series/genres-series?genre=${genre}`);
   }
 
 
-  getArticles(): Observable<Article[]> {
-    return this.http.get<Article[]>(this.apiUrl);
+  getGenresForSeries(): Observable<Genre[]> {
+    return this.http.get<Genre[]>(`${this.apiUrl}/series/genres-series`);
   }
 
-  getArticlesByGenre(genre: string): Observable<Article[]> {
-    return this.http.get<Article[]>(`${this.apiUrl}?genre=${genre}`)
+  getDataById(id: string): Observable<Data> {
+    return this.http.get<Data>(`${this.apiUrl}/filmes/${id}`);
   }
 
-  getGenres(): Observable<Genre[]> {
-    return this.http.get<Genre[]>(`${this.apiUrl}/genres`);
+  getSeriesDataById(id: string): Observable<Data> {
+    return this.http.get<Data>(`${this.apiUrl}/series/${id}`);
   }
-
-  getArticleById(id: string): Observable<Article> {
-     return this.http.get<Article>(`${this.apiUrl}/${id}`); }
 }
+
+

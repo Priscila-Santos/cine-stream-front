@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Article } from 'src/app/services/data.service';
+import { Data } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-small-card',
@@ -8,14 +8,17 @@ import { Article } from 'src/app/services/data.service';
 })
 export class SmallCardComponent {
   @Input() genre: string = '';
-  @Input() articles: Article[] = [];
+  @Input() articles: Data[] = [];
 
 
   currentIndex: number = 0;
 
   // constructor() {}
 
-  // ngOnInit() {}
+  ngOnInit(): void {
+    console.log('Gêneros:', this.genre);
+    console.log('Dados', this.articles);
+  }
 
   previous() {
     this.currentIndex = (this.currentIndex - 1 + this.articles.length) % this.articles.length;

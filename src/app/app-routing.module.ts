@@ -18,12 +18,19 @@ const routes: Routes = [
 	},
 
 	{
-		path: 'productions/:genre',
-		component: ContentComponent
+		path: 'filmes',
+		component: ProductionComponent,
+		data: { type: 'filmes'}
 	},
 
 	{
-		path: 'prfile',
+		path: 'series',
+		component: ProductionComponent,
+		data: { type: 'series'}
+	},
+
+	{
+		path: 'profile',
 		component: ProfileComponent
 	},
 
