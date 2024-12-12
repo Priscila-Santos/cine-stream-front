@@ -41,6 +41,12 @@ const routes: Routes = [
 	},
 
 	{
+		path: 'search/:query',
+		component: ProductionComponent,
+		data: { type: 'search'}
+	},
+
+	{
 		path: 'profile',
 		component: ProfileComponent
 	},
