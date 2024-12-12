@@ -14,19 +14,23 @@ export interface Data {
   photoCover: string;
   cardTitle: string;
   cardDescription: string;
-  genre: string;
+  genre?: string;
   releaseYear: string;
-  duration: string;
+  duration?: string;
   ratings: number; 
-  reviewCount: number; 
-  cast: string[]; 
-  directors: string[]; 
-  writers: string[]; 
+  reviewCount?: number; 
+  cast?: string[]; 
+  directors?: string[]; 
+  writers?: string[]; 
   synopsis: string; 
   seasons?: number; 
   episodes?: number;
   poster_path: string;
   title: string;
+
+  overview: string; 
+  release_date: string; 
+  vote_average: number;
 }
 
 export interface Genre {
@@ -79,7 +83,7 @@ export class DataService {
     return this.http.get<Genre[]>(`${this.apiUrl}/series/genres-series`);
   }
 
-  getDataById(id: string): Observable<Data> {
+  getFilmesDataById(id: string): Observable<Data> {
     return this.http.get<Data>(`${this.apiUrl}/filmes/${id}`);
   }
 

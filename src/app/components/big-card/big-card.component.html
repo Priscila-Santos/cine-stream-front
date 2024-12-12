@@ -12,19 +12,16 @@
   </div>
   
 
- 
- 
- 
- <!-- <div class="big-card-container">
-	<h1 class="title">{{ title }}</h1>
+
+ <!-- <div class="big-card-container" *ngIf="items.length > 0">
+	<h1 class="title" (click)="goToContent()">{{ items[currentIndex]['cardTitle'] }}</h1>
 	<div class="image-container">
 	  <button class="arrow left" (click)="previous()">&#9664;</button>
-	  <img [src]="photoCover" alt="{{ title }}" class="big-card-image" (click)="goToContent()" />
+	  <img [src]="items[currentIndex]['photoCover']" alt="{{ items[currentIndex]['cardTitle'] }}" class="big-card-image" (click)="goToContent()" />
 	  <button class="arrow right" (click)="next()">&#9654;</button>
 	</div>
 	<div class="indicators">
-	  <span *ngFor="let i of [].constructor(totalItems); let index = index"
-			[ngClass]="{'active': currentIndex === index}"></span>
+	  <span *ngFor="let index of [].constructor(items.length); let i = index" [ngClass]="{'active': currentIndex === i}"></span>
 	</div>
-  </div> -->
-  
+  </div>
+   -->

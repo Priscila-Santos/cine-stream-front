@@ -17,6 +17,17 @@ const routes: Routes = [
 		component: ContentComponent
 	},
 
+	{ 
+		path: 'content/filmes/:id', 
+		component: ContentComponent, 
+		data: { type: 'filmes' } 
+	}, 
+	
+	{ path: 'content/series/:id', 
+	  component: ContentComponent, 
+	  data: { type: 'series' } 
+	},
+
 	{
 		path: 'filmes',
 		component: ProductionComponent,
