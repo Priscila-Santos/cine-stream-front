@@ -10,7 +10,7 @@
     <div *ngFor="let genre of genres">
       <app-small-card 
         [genre]="genre.name" 
-        [articles]="dataByGenre[genre.name]">
+        [data]="dataByGenre[genre.name]">
       </app-small-card>
     </div>
   </div>

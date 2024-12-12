@@ -1,3 +1,4 @@
+
 // import { Component, OnInit } from '@angular/core';
 // import { DataService, Data, Genre } from './services/data.service';
 // import { Observable, Observer } from 'rxjs';
@@ -17,12 +18,12 @@
 //   constructor(private dataService: DataService) {}
 
 //   ngOnInit(): void {
-//       this.loadMainArticle();
-//       this.loadGenres();
+//     this.loadMainArticle();
+//     this.loadGenres();
 //   }
 
 //   loadMainArticle(): void {
-//     this.dataService.getAllMovies().subscribe((data: Data[]) => {
+//     this.dataService.getAllMovies().subscribe((: Data[]) => {
 //       if (data && data.length > 0) {
 //         this.mainArticle = data[0];
 //         this.otherArticles = data.slice(1);
@@ -33,35 +34,32 @@
 //   }
 
 //   loadGenres(): void {
-//     const genreObserver: Observer<Genre[]> = {
-//       next: (genres) => {
-//         if (genres && genres.length > 0) { // Verificação adicional
-//           this.genres = genres;
+//     const genreObserver: Observer<{ genres: Genre[] }> = {
+//       next: (response) => {
+//         if (response.genres && Array.isArray(response.genres)) {
+//           console.log('Gêneros carregados:', response.genres);
+//           this.genres = response.genres;
 //           this.genres.forEach((genre) => {
-//             this.loadArticlesByGenre(genre.name);
+//             this.loadArticlesByGenre(genre.id);
 //           });
 //         } else {
 //           console.error('Nenhum gênero encontrado');
 //         }
 //       },
 //       error: (err) => console.error('Erro ao carregar os gêneros:', err),
-//       complete: function (): void {
-//         throw new Error('Function not implemented.');
-//       }
+//       complete: () => console.log('Carregamento de gêneros completo')
 //     };
 //     this.dataService.getGenresForMovies().subscribe(genreObserver);
 //   }
-  
 
- 
-
-//   loadArticlesByGenre(genre: string): void {
-//     this.dataService.getMoviesByGenre(genre).subscribe((articles: Data[]) => {
-//       if (articles && Array.isArray(articles)) {
-//         this.articlesByGenre[genre] = articles;
+//   loadArticlesByGenre(genreId: number): void {
+//     this.dataService.getMoviesByGenre(genreId).subscribe((articles: Data[]) => {
+//       const genre = this.genres.find(g => g.id === genreId);
+//       if (articles && Array.isArray(articles) && genre) {
+//         this.articlesByGenre[genre.name] = articles;
 //       }
 //     }, error => {
-//       console.error(`Erro ao buscar artigos para o gênero ${genre}:`, error);
+//       console.error(`Erro ao buscar artigos para o gênero ${genreId}:`, error);
 //     });
 //   }
 // }
@@ -91,10 +89,11 @@ export class AppComponent implements OnInit {
   }
 
   loadMainArticle(): void {
-    this.dataService.getAllMovies().subscribe((data: Data[]) => {
-      if (data && data.length > 0) {
-        this.mainArticle = data[0];
-        this.otherArticles = data.slice(1);
+    this.dataService.getAllMovies().subscribe((response: { results: Data[] }) => {
+      if (response.results && response.results.length > 0) {
+        this.mainArticle = response.results[0];
+        this.otherArticles = response.results.slice(1);
+        console.log('Filmes carregados:', response.results);
       }
     }, error => {
       console.error('Erro ao buscar filmes:', error);
@@ -108,7 +107,7 @@ export class AppComponent implements OnInit {
           console.log('Gêneros carregados:', response.genres);
           this.genres = response.genres;
           this.genres.forEach((genre) => {
-            this.loadArticlesByGenre(genre.id);
+            this.loadArticlesByGenre(genre);
           });
         } else {
           console.error('Nenhum gênero encontrado');
@@ -120,15 +119,14 @@ export class AppComponent implements OnInit {
     this.dataService.getGenresForMovies().subscribe(genreObserver);
   }
 
-  loadArticlesByGenre(genreId: number): void {
-    this.dataService.getMoviesByGenre(genreId).subscribe((articles: Data[]) => {
-      const genre = this.genres.find(g => g.id === genreId);
-      if (articles && Array.isArray(articles) && genre) {
-        this.articlesByGenre[genre.name] = articles;
+  loadArticlesByGenre(genre: Genre): void {
+    this.dataService.getMoviesByGenre(genre.id).subscribe((response: { results: Data[] }) => {
+      if (response.results && Array.isArray(response.results)) {
+        this.articlesByGenre[genre.name] = response.results;
+        console.log(`Artigos carregados para o gênero ${genre.name}:`, response.results);
       }
     }, error => {
-      console.error(`Erro ao buscar artigos para o gênero ${genreId}:`, error);
+      console.error(`Erro ao buscar artigos para o gênero ${genre.name}:`, error);
     });
   }
 }
-

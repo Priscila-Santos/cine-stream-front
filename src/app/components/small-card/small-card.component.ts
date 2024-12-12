@@ -6,25 +6,23 @@ import { Data } from 'src/app/services/data.service';
   templateUrl: './small-card.component.html',
   styleUrls: ['./small-card.component.css']
 })
-export class SmallCardComponent {
+export class SmallCardComponent implements OnInit {
   @Input() genre: string = '';
-  @Input() articles: Data[] = [];
-
+  @Input() data: Data[] = [];
 
   currentIndex: number = 0;
 
-  // constructor() {}
-
   ngOnInit(): void {
-    console.log('Gêneros:', this.genre);
-    console.log('Dados', this.articles);
+    console.log('Gênero:', this.genre);
+    console.log('Dados:', this.data);
   }
 
   previous() {
-    this.currentIndex = (this.currentIndex - 1 + this.articles.length) % this.articles.length;
+    this.currentIndex = (this.currentIndex - 1 + this.data.length) % this.data.length;
   }
 
   next() {
-    this.currentIndex = (this.currentIndex + 1) % this.articles.length;
+    this.currentIndex = (this.currentIndex + 1) % this.data.length;
   }
 }
+

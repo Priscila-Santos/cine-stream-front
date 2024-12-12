@@ -10,7 +10,7 @@ export interface Type {
 }
 
 export interface Data {
-  id: string;
+  id: number;
   photoCover: string;
   cardTitle: string;
   cardDescription: string;
@@ -25,6 +25,8 @@ export interface Data {
   synopsis: string; 
   seasons?: number; 
   episodes?: number;
+  poster_path: string;
+  title: string;
 }
 
 export interface Genre {
@@ -41,12 +43,12 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  getAllMovies(page: number = 1): Observable<Data[]> {
-    return this.http.get<Data[]>(`${this.apiUrl}/filmes/all-filmes?page=${page}`);
+  getAllMovies(page: number = 1): Observable<{results: Data[]}> {
+    return this.http.get<{results: Data[]}>(`${this.apiUrl}/filmes/all-filmes?page=${page}`);
   }
 
-  getAllSeries(page: number = 1): Observable<Data[]> {
-    return this.http.get<Data[]>(`${this.apiUrl}/series/all-series?page=${page}`);
+  getAllSeries(page: number = 1): Observable<{results: Data[]}> {
+    return this.http.get<{results: Data[]}>(`${this.apiUrl}/series/all-series?page=${page}`);
   }
 
   getMoviesByTitle(title: string, page: number = 1): Observable<Data[]> {
@@ -58,19 +60,19 @@ export class DataService {
   }
  
 
-  getMoviesByGenre(genreId: number, page: number = 1): Observable<Data[]> {
-    return this.http.get<Data[]>(`${this.apiUrl}/filmes/por-genero?genreId=${genreId}&page=${page}`);
+  getMoviesByGenre(genreId: number, page: number = 1): Observable<{results: Data[]}> {
+    return this.http.get<{results: Data[]}>(`${this.apiUrl}/filmes/por-genero?genreId=${genreId}&page=${page}`);
   }
   
   
   getGenresForMovies(): Observable<{ genres: Genre[] }> {
     return this.http.get<{ genres: Genre[] }>(`${this.apiUrl}/filmes/genres-filmes`);
   }
-  
 
-  getSeriesByGenre(genre: string): Observable<Data[]> {
-    return this.http.get<Data[]>(`${this.apiUrl}/series/genres-series?genre=${genre}`);
+  getSeriesByGenre(genreId: number, page: number = 1): Observable<{results: Data[]}> {
+    return this.http.get<{results: Data[]}>(`${this.apiUrl}/series/por-genero?genreId=${genreId}&page=${page}`);
   }
+
 
 
   getGenresForSeries(): Observable<Genre[]> {

@@ -4,8 +4,9 @@ body, html{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background:  linear-gradient(180deg, #270c24, #2a0d26 80%, #8d2b82);
+  /* background:  linear-gradient(180deg, #270c24, #2a0d26 80%, #8d2b82); */
   /* background-color: #170545; */
+  background-color: #002234;
 	color: #FFF;
   font-family: 'Arvo', sans-serif;
 	
