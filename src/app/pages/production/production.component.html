@@ -1,23 +1,45 @@
-<div *ngIf="articles.length > 0" class="production-container">
-  <div *ngFor="let article of paginatedArticles" class="production-item">
-    <img [src]="article.photoCover" alt="{{ article.cardTitle }}" class="production-image">
+<div *ngIf="data && data.length > 0" class="production-container">
+  <div *ngFor="let item of paginatedArticles" class="production-item">
+    <img [src]="'https://image.tmdb.org/t/p/w500' + item.poster_path" alt="{{ item.title || item.name }}" class="production-image">
     <div class="production-details">
-      <h2><a [routerLink]="['/content', article.id]">{{ article.cardTitle }}</a></h2>
-      <p>Ano de Lançamento: {{ article.releaseYear }}</p>
-      <p>Duração: {{ article.duration }}</p>
-      <p>Classificação: {{ article.genre }}</p>
-      <div *ngIf="article.seasons">
-        <p>Temporadas: {{ article.seasons }}</p>
-        <p>Episódios: {{ article.episodes }}</p>
-      </div>
-      <button (click)="toggleFavorite(article)" class="favorite-button">
-        <i [class]="isFavorited(article) ? 'fas fa-heart' : 'far fa-heart'"></i>
+      <h2><a [routerLink]="['/content', item.id]">{{ item.title || item.name }}</a></h2>
+      <p>Ano de Lançamento: {{ item.release_date || item.first_air_date || 'Indisponível' }}</p>
+      <p>Gênero: {{ item.genre_names ? item.genre_names.join(', ') : 'Indisponível' }}</p>
+      <p>Descrição: {{ item.overview || 'Sem descrição' }}</p>
+      <p>Nota: {{ item.vote_average || 'Indisponível' }}</p>
+      <button (click)="toggleFavorite(item)" class="favorite-button">
+        <i [class]="isFavorited(item) ? 'fas fa-heart' : 'far fa-heart'"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="pagination">
+    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">&lt;</button>
+    <span *ngFor="let page of visiblePages">
+      <button (click)="goToPage(page)" [class.active]="currentPage === page">{{ page }}</button>
+    </span>
+    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">&gt;</button>
+  </div>
+</div>
+
+
+<!-- <div *ngIf="data && data.length > 0" class="production-container">
+  <div *ngFor="let item of paginatedArticles" class="production-item">
+    <img [src]="'https://image.tmdb.org/t/p/w500' + item.poster_path" alt="{{ item.title || item.name }}" class="production-image">
+    <div class="production-details">
+      <h2><a [routerLink]="['/content', item.id]">{{ item.title || item.name }}</a></h2>
+      <p>Ano de Lançamento: {{ item.release_date || item.first_air_date || 'Indisponível' }}</p>
+      <p>Classificação: {{ item.genre_names ? item.genre_names.join(', ') : 'Indisponível' }}</p>
+      <p>Descrição: {{ item.overview || 'Sem descrição' }}</p>
+      <p>Nota: {{ item.vote_average || 'Indisponível' }}</p>
+      <button (click)="toggleFavorite(item)" class="favorite-button">
+        <i [class]="isFavorited(item) ? 'fas fa-heart' : 'far fa-heart'"></i>
       </button>
     </div>
   </div>
 
   <div class="pagination">
     <button (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
-    <button (click)="nextPage()" [disabled]="(currentPage * itemsPerPage) >= articles.length">Próximo</button>
+    <button (click)="nextPage()" [disabled]="(currentPage * itemsPerPage) >= data.length">Próximo</button>
   </div>
-</div>
+</div> -->

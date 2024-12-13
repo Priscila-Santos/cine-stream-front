@@ -24,7 +24,8 @@
 
 .production-details h2 a {
   text-decoration: none;
-  color: #333;
+  color: #d20b0b;
+  font-size: 36px;
 }
 
 .favorite-button {
@@ -45,6 +46,23 @@
 .pagination {
   display: flex;
   justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+}
+
+.pagination button.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+
+/* .pagination {
+  display: flex;
+  justify-content: center;
   gap: 1rem;
   margin-top: 1rem;
 }
@@ -53,4 +71,4 @@
   padding: 0.5rem 1rem;
   font-size: 1rem;
   cursor: pointer;
-}
+} */

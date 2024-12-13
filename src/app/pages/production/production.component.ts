@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ArticleService, Article } from 'src/app/services/data.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DataService, Data } from 'src/app/services/data.service';
 import { FavoriteService } from 'src/app/services/favorite.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SearchDialogComponent } from 'src/app/components/search-dialog/search-dialog.component';
 
 @Component({
   selector: 'app-production',
@@ -9,55 +11,334 @@ import { FavoriteService } from 'src/app/services/favorite.service';
   styleUrls: ['./production.component.css']
 })
 export class ProductionComponent implements OnInit {
-  articles: Article[] = [];
+  data: Data[] = [];
+  genres: { id: number; name: string; }[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 15;
+  totalItems: number = 0; // Total number of items
+  totalPages: number = 1; // Total number of pages
+  visiblePages: number[] = []; // Pages visible in the navigation
+  searchQuery: string = ''; // Armazena a busca
 
   constructor(
     private route: ActivatedRoute,
-    private articleService: ArticleService,
-    private favoriteService: FavoriteService
+    private router: Router,
+    private dataService: DataService,
+    private favoriteService: FavoriteService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    const genre = this.route.snapshot.paramMap.get('genre');
-    if (genre) {
-      this.articleService.getArticlesByGenre(genre).subscribe((articles: Article[]) => {
-        this.articles = articles;
+    this.route.params.subscribe(params => {
+      if (params['query']) {
+        this.searchQuery = params['query'];
+        this.searchContent();
+      } else {
+        this.loadContent();
+      }
+    });
+  }
+
+  loadContent(): void {
+    const type = this.route.snapshot.data['type'];
+    console.log('Tipo:', type);
+
+    if (type === 'filmes') {
+      this.dataService.getGenresForMovies().subscribe((response) => {
+        this.genres = response.genres;
+        console.log('Gêneros de filmes:', this.genres);
+        this.dataService.getAllMovies().subscribe((response) => {
+          this.totalItems = response.total_results;
+          this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+          this.updateVisiblePages();
+          this.data = response.results.map(item => ({
+            ...item,
+            genre_names: this.mapGenres(item.genre_ids)
+          }));
+          console.log('Filmes carregados:', this.data);
+        }, error => {
+          console.error('Erro ao buscar filmes:', error);
+        });
+      }, error => {
+        console.error('Erro ao buscar gêneros de filmes:', error);
       });
-    } else {
-      this.articleService.getArticles().subscribe((articles: Article[]) => {
-        this.articles = articles;
+    } else if (type === 'series') {
+      this.dataService.getGenresForSeries().subscribe((response) => {
+        this.genres = response.genres;
+        console.log('Gêneros de séries:', this.genres);
+        this.dataService.getAllSeries().subscribe((response) => {
+          this.totalItems = response.total_results;
+          this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+          this.updateVisiblePages();
+          this.data = response.results.map(item => ({
+            ...item,
+            genre_names: this.mapGenres(item.genre_ids)
+          }));
+          console.log('Séries carregadas:', this.data);
+        }, error => {
+          console.error('Erro ao buscar séries:', error);
+        });
+      }, error => {
+        console.error('Erro ao buscar gêneros de séries:', error);
       });
     }
   }
 
-  get paginatedArticles(): Article[] {
+  searchContent(): void {
+    const type = this.route.snapshot.data['type'];
+    console.log('Tipo:', type);
+
+    if (type === 'filmes') {
+      this.dataService.getGenresForMovies().subscribe((response) => {
+        this.genres = response.genres;
+        console.log('Gêneros de filmes:', this.genres);
+        this.dataService.getMoviesByTitle(this.searchQuery, this.currentPage).subscribe((response) => {
+          this.totalItems = response.length;
+          this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+          this.updateVisiblePages();
+          this.data = response.map(item => ({
+            ...item,
+            genre_names: this.mapGenres(item.genre_ids)
+          }));
+          console.log('Filmes carregados:', this.data);
+        }, error => {
+          console.error('Erro ao buscar filmes:', error);
+        });
+      }, error => {
+        console.error('Erro ao buscar gêneros de filmes:', error);
+      });
+    } else if (type === 'series') {
+      this.dataService.getGenresForSeries().subscribe((response) => {
+        this.genres = response.genres;
+        console.log('Gêneros de séries:', this.genres);
+        this.dataService.getSeriesByTitle(this.searchQuery, this.currentPage).subscribe((response) => {
+          this.totalItems = response.length;
+          this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+          this.updateVisiblePages();
+          this.data = response.map(item => ({
+            ...item,
+            genre_names: this.mapGenres(item.genre_ids)
+          }));
+          console.log('Séries carregadas:', this.data);
+        }, error => {
+          console.error('Erro ao buscar séries:', error);
+        });
+      }, error => {
+        console.error('Erro ao buscar gêneros de séries:', error);
+      });
+    }
+  }
+
+  mapGenres(genreIds: number[]): string[] {
+    if (!this.genres || !Array.isArray(this.genres)) {
+      console.error('Genres não definidos ou não são uma array:', this.genres);
+      return ['Desconhecido'];
+    }
+    if (!genreIds || !Array.isArray(genreIds)) {
+      console.error('Genre IDs não definidos ou não são uma array:', genreIds);
+      return ['Desconhecido'];
+    }
+    return genreIds.map(id => this.genres.find(genre => genre.id === id)?.name || 'Desconhecido');
+  }
+
+  updateVisiblePages(): void {
+    const visiblePages = 10;
+    const half = Math.floor(visiblePages / 2);
+    let start = Math.max(this.currentPage - half, 1);
+    let end = Math.min(start + visiblePages - 1, this.totalPages);
+
+    if (end - start + 1 < visiblePages) {
+      start = Math.max(end - visiblePages + 1, 1);
+    }
+
+    this.visiblePages = Array.from({ length: end - start + 1 }, (_, i) => i + start);
+  }
+
+  get paginatedArticles(): Data[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.articles.slice(startIndex, startIndex + this.itemsPerPage);
+    return this.data.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
-  nextPage(): void {
-    if ((this.currentPage * this.itemsPerPage) < this.articles.length) {
-      this.currentPage++;
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.loadPage();
+      this.updateVisiblePages();
     }
   }
 
-  previousPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-    }
-  }
-
-  toggleFavorite(article: Article): void {
-    if (this.isFavorited(article)) {
-      this.favoriteService.removeFavorite(article);
+  loadPage(): void {
+    if (this.searchQuery) {
+      this.searchContent();
     } else {
-      this.favoriteService.addFavorite(article);
+      this.loadContent();
     }
   }
 
-  isFavorited(article: Article): boolean {
-    return this.favoriteService.getFavorites().some(fav => fav.id === article.id);
+  toggleFavorite(data: Data): void {
+    if (this.isFavorited(data)) {
+      this.favoriteService.removeFavorite(data);
+    } else {
+      this.favoriteService.addFavorite(data);
+    }
+  }
+
+  isFavorited(data: Data): boolean {
+    return this.favoriteService.getFavorites().some(fav => fav.id === data.id);
   }
 }
+
+
+
+// import { Component, OnInit } from '@angular/core';
+// import { ActivatedRoute } from '@angular/router';
+// import { DataService, Data } from 'src/app/services/data.service';
+// import { FavoriteService } from 'src/app/services/favorite.service';
+
+// import { MatDialog } from '@angular/material/dialog';
+// import { SearchDialogComponent } from 'src/app/components/search-dialog/search-dialog.component';
+
+// @Component({
+//   selector: 'app-production',
+//   templateUrl: './production.component.html',
+//   styleUrls: ['./production.component.css']
+// })
+// export class ProductionComponent implements OnInit {
+//   data: Data[] = [];
+//   genres: { id: number; name: string; }[] = [];
+//   currentPage: number = 1;
+//   itemsPerPage: number = 15;
+//   totalItems: number = 0; // Total number of items
+//   totalPages: number = 1; // Total number of pages
+//   visiblePages: number[] = []; // Pages visible in the navigation
+//   searchQuery: string = ''; //armazena a busca
+
+//   constructor(
+//     private route: ActivatedRoute,
+//     private dataService: DataService,
+//     private favoriteService: FavoriteService,
+//     public dialog: MatDialog
+//   ) {}
+
+//   ngOnInit(): void {
+//     const type = this.route.snapshot.data['type'];
+//     console.log('Tipo:', type);
+
+//     if (type === 'filmes') {
+//       this.dataService.getGenresForMovies().subscribe((response) => {
+//         this.genres = response.genres;
+//         console.log('Gêneros de filmes:', this.genres);
+//         this.dataService.getAllMovies().subscribe((response) => {
+//           this.totalItems = response.total_results;
+//           this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+//           this.updateVisiblePages();
+//           this.data = response.results.map(item => ({
+//             ...item,
+//             genre_names: this.mapGenres(item.genre_ids)
+//           }));
+//           console.log('Filmes carregados:', this.data);
+//         }, error => {
+//           console.error('Erro ao buscar filmes:', error);
+//         });
+//       }, error => {
+//         console.error('Erro ao buscar gêneros de filmes:', error);
+//       });
+//     } else if (type === 'series') {
+//       this.dataService.getGenresForSeries().subscribe((response) => {
+//         this.genres = response.genres;
+//         console.log('Gêneros de séries:', this.genres);
+//         this.dataService.getAllSeries().subscribe((response) => {
+//           this.totalItems = response.total_results;
+//           this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+//           this.updateVisiblePages();
+//           this.data = response.results.map(item => ({
+//             ...item,
+//             genre_names: this.mapGenres(item.genre_ids)
+//           }));
+//           console.log('Séries carregadas:', this.data);
+//         }, error => {
+//           console.error('Erro ao buscar séries:', error);
+//         });
+//       }, error => {
+//         console.error('Erro ao buscar gêneros de séries:', error);
+//       });
+//     }
+//   }
+
+//   mapGenres(genreIds: number[]): string[] {
+//     if (!this.genres || !Array.isArray(this.genres)) {
+//       console.error('Genres não definidos ou não são uma array:', this.genres);
+//       return ['Desconhecido'];
+//     }
+//     if (!genreIds || !Array.isArray(genreIds)) {
+//       console.error('Genre IDs não definidos ou não são uma array:', genreIds);
+//       return ['Desconhecido'];
+//     }
+//     return genreIds.map(id => this.genres.find(genre => genre.id === id)?.name || 'Desconhecido');
+//   }
+
+//   updateVisiblePages(): void {
+//     const visiblePages = 10;
+//     const half = Math.floor(visiblePages / 2);
+//     let start = Math.max(this.currentPage - half, 1);
+//     let end = Math.min(start + visiblePages - 1, this.totalPages);
+
+//     if (end - start + 1 < visiblePages) {
+//       start = Math.max(end - visiblePages + 1, 1);
+//     }
+
+//     this.visiblePages = Array.from({ length: end - start + 1 }, (_, i) => i + start);
+//   }
+
+//   get paginatedArticles(): Data[] {
+//     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+//     return this.data.slice(startIndex, startIndex + this.itemsPerPage);
+//   }
+
+//   goToPage(page: number): void {
+//     if (page >= 1 && page <= this.totalPages) {
+//       this.currentPage = page;
+//       this.loadPage();
+//       this.updateVisiblePages();
+//     }
+//   }
+
+//   loadPage(): void {
+//     const type = this.route.snapshot.data['type'];
+
+//     if (type === 'filmes') {
+//       this.dataService.getAllMovies(this.currentPage).subscribe((response) => {
+//         this.data = response.results.map(item => ({
+//           ...item,
+//           genre_names: this.mapGenres(item.genre_ids)
+//         }));
+//         console.log('Filmes carregados:', this.data);
+//       }, error => {
+//         console.error('Erro ao buscar filmes:', error);
+//       });
+//     } else if (type === 'series') {
+//       this.dataService.getAllSeries(this.currentPage).subscribe((response) => {
+//         this.data = response.results.map(item => ({
+//           ...item,
+//           genre_names: this.mapGenres(item.genre_ids)
+//         }));
+//         console.log('Séries carregadas:', this.data);
+//       }, error => {
+//         console.error('Erro ao buscar séries:', error);
+//       });
+//     }
+//   }
+
+//   toggleFavorite(data: Data): void {
+//     if (this.isFavorited(data)) {
+//       this.favoriteService.removeFavorite(data);
+//     } else {
+//       this.favoriteService.addFavorite(data);
+//     }
+//   }
+
+//   isFavorited(data: Data): boolean {
+//     return this.favoriteService.getFavorites().some(fav => fav.id === data.id);
+//   }
+// }
+

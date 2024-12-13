@@ -1,10 +1,8 @@
 <div class="container__articles">
   <div class="articles__main">
     <app-big-card 
-      *ngIf="mainArticle"
-      [title]="mainArticle.cardTitle" 
-      [photoCover]="mainArticle.photoCover" 
-      [id]="mainArticle.id">
+      *ngIf="mainData.length > 0"
+      [items]="mainData">
     </app-big-card>
   </div>
 
@@ -12,9 +10,33 @@
     <div *ngFor="let genre of genres">
       <app-small-card 
         [genre]="genre.name" 
-        [articles]="articlesByGenre[genre.name]">
+        [data]="dataByGenre[genre.name]">
       </app-small-card>
     </div>
   </div>
 </div>
+
+
+
+
+<!-- <div class="container__articles">
+  <div class="articles__main">
+    <app-big-card 
+      *ngIf="mainData"
+      [title]="mainData.cardTitle" 
+      [photoCover]="mainData.photoCover" 
+      [id]="mainData.id">
+    </app-big-card>
+  </div>
+
+  <div class="articles__others">
+    <div *ngFor="let genre of genres">
+      <app-small-card 
+        [genre]="genre.name" 
+        [articles]="dataByGenre[genre.name]">
+      </app-small-card>
+    </div>
+  </div>
+</div> -->
+
 

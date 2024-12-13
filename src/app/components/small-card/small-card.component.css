@@ -5,6 +5,7 @@
 		  .genre-title {
 			text-align: left;
 			font-size: 1.5rem;
+			/* color: #ce4040; */
 			margin-bottom: 1rem;
 		  }
 		  
@@ -12,18 +13,28 @@
 			position: relative;
 			display: flex;
 			align-items: center;
-			justify-content: space-between; 
-			margin-bottom: 2rem; /* Adiciona espaço entre a imagem e o título */
+			/* justify-content: space-between; 
+			margin-bottom: 2rem;  */
+			/* Adiciona espaço entre a imagem e o título */
 		  }
 		  
 		  .images {
 			display: flex;
 			gap: 1rem;
 			overflow: hidden;
+			flex: 1;
+		  }
+
+		  .image-wrapper {
+			display: flex;
+			flex-shrink: 0;
+			width: 100%;
+			justify-content: space-between;
 		  }
 		  
 		  .image {
-			flex: 1 0 20%;
+			/* flex: 1 0 20%; */
+			flex: 0 0 calc(20% - 1rem); /* mostrar 5 imagens por vez*/
 			text-align: center;
 		  }
 		  
@@ -39,7 +50,8 @@
 			font-size: 4rem;
 			color: #fff;
 			cursor: pointer;
-			position: relative;
+			z-index: 1;
+			/* position: relative; */
 		  }
 		  
 		  .left {
@@ -52,8 +64,11 @@
 			margin-left: 1rem;
 		  }
 
-		  .small-card-title { text-align: center; 
+		  .small-card-title, a { 
+			font-family: 'Arvo', sans-serif;
+			text-align: center; 
 			font-size: 1.25rem; 
 			margin-top: 1rem; /* Adiciona espaço acima do título */
-		  }
+			color: rgb(188, 194, 189);
+		  } 
 				  
