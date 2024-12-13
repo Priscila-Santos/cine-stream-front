@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 
 export interface Type {
   filmes: string;
@@ -8,7 +8,6 @@ export interface Type {
   realityShow: string;
   favoritos: string;
 }
-
 export interface Data {
   id: number;
   photoCover: string;
@@ -39,6 +38,12 @@ export interface Data {
 
 }
 
+ interface ApiResponse {
+  total_results: number;
+  total_pages: number;
+  results: Data[];
+}
+
 export interface Genre {
   id: number;
   name: string;
@@ -65,13 +70,35 @@ export class DataService {
     return this.http.get<{results: Data[], total_results: number}>(`${this.apiUrl}/series/all-series?page=${page}`);
   }
 
-  getMoviesByTitle(title: string, page: number = 1): Observable<Data[]> {
-    return this.http.get<Data[]>(`${this.apiUrl}/filmes?titulo=${title}&page=${page}`);
+  getMoviesByTitle(title: string, page: number = 1): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/filmes?titulo=${title}&page=${page}`).pipe(
+      tap((data: any) => console.log('Filmes recebidos:', data)),
+      catchError(error => {
+        console.error('Erro ao buscar filmes:', error);
+        return throwError(error);
+      })
+    );
   }
+  
+  getSeriesByTitle(title: string, page: number = 1): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/series?titulo=${title}&page=${page}`).pipe(
+      tap((data: any) => console.log('Séries recebidas:', data)),
+      catchError(error => {
+        console.error('Erro ao buscar séries:', error);
+        return throwError(error);
+      })
+    );
+  }
+  
+  
 
-  getSeriesByTitle(title: string, page: number = 1): Observable<Data[]> { 
-    return this.http.get<Data[]>(`${this.apiUrl}/series?titulo=${title}&page=${page}`); 
-  }
+  // getMoviesByTitle(title: string, page: number = 1): Observable<Data[]> {
+  //   return this.http.get<Data[]>(`${this.apiUrl}/filmes?titulo=${title}&page=${page}`);
+  // }
+
+  // getSeriesByTitle(title: string, page: number = 1): Observable<Data[]> { 
+  //   return this.http.get<Data[]>(`${this.apiUrl}/series?titulo=${title}&page=${page}`); 
+  // }
  
 
   getMoviesByGenre(genreId: number, page: number = 1): Observable<{results: Data[]}> {

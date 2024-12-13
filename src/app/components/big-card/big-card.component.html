@@ -10,18 +10,29 @@
 			[ngClass]="{'active': currentIndex === index}"></span>
 	</div>
   </div>
-  
 
-
- <!-- <div class="big-card-container" *ngIf="items.length > 0">
-	<h1 class="title" (click)="goToContent()">{{ items[currentIndex]['cardTitle'] }}</h1>
-	<div class="image-container">
+  <!-- <div class="big-card-container" *ngIf="items.length > 0">
+	<div class="content-container">
+	  <div class="info">
+		<h1 class="title">{{ items[currentIndex]['cardTitle'] }}</h1>
+		<p><strong>Gêneros:</strong> {{ items[currentIndex]['genres'].join(', ') }}</p>
+		<p><strong>Sinopse:</strong> {{ items[currentIndex]['synopsis'] }}</p>
+		<p><strong>Nota:</strong> {{ items[currentIndex]['rating'] }}</p>
+		<div class="stars">
+		  <span *ngFor="let star of getStars(items[currentIndex]['rating'])">&#9733;</span>
+		</div>
+	  </div>
+	  <div class="image-container">
+		<img [src]="items[currentIndex]['photoCover']" alt="{{ items[currentIndex]['cardTitle'] }}" class="big-card-image" (click)="goToContent()" />
+	  </div>
+	</div>
+	<div class="navigation">
 	  <button class="arrow left" (click)="previous()">&#9664;</button>
-	  <img [src]="items[currentIndex]['photoCover']" alt="{{ items[currentIndex]['cardTitle'] }}" class="big-card-image" (click)="goToContent()" />
 	  <button class="arrow right" (click)="next()">&#9654;</button>
 	</div>
 	<div class="indicators">
-	  <span *ngFor="let index of [].constructor(items.length); let i = index" [ngClass]="{'active': currentIndex === i}"></span>
+	  <span *ngFor="let i of [].constructor(totalItems); let index = index" [ngClass]="{'active': currentIndex === index}"></span>
 	</div>
   </div>
-   -->
+  
+ -->

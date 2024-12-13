@@ -66,5 +66,10 @@
   .indicators .active {
 	background-color: #000;
   }
+
+  .stars span {
+	color: yellow;
+	font-size: 1.5rem;
+  }
   
 	

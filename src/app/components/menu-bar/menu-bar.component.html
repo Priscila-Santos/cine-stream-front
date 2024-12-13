@@ -2,13 +2,12 @@
 	<img class="logo" alt="Logo" src="assets/img/logo.png">
 	
 	<nav class="nav-links">
-	  <a routerLink="/" routerLinkActive="active-link" class="link">Home</a>
+	  <a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true}" class="link">Home</a>
 	  <a routerLink="/filmes" routerLinkActive="active-link" class="link">Filmes</a>
 	  <a routerLink="/series" routerLinkActive="active-link" class="link">Series</a>
 	  <a routerLink="/minha-lista" routerLinkActive="active-link" class="link">Minha Lista</a>
 	</nav>
 	<div class="icons"> <img class="search-icon" src="assets/svg/search-icon.svg" alt="Search" (click)="openSearchDialog()"> <img class="profile-icon" [src]="avatarUrl" alt="Profile" (click)="goToProfile()"> 
 	</div>
-
   </div>
   
