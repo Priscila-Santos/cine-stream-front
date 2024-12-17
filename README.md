@@ -1,6 +1,7 @@
 # CineStream 
 
 CineStream é um projeto que utiliza dados da API TMDb para fornecer informações detalhadas sobre filmes e séries. Esta fase do projeto substitui o uso de arquivos CSV do módulo passado por um banco de dados real H2, proporcionando uma experiência mais robusta e escalável. O front-end foi desenvolvido em Angular para se integrar ao back-end feito com Spring Boot Java Maven.
+[Link do Back-End do projeto](https://github.com/Priscila-Santos/Cine-Stream-Test) (incluindo testes automatizados)
 
 ## Descrição do Projeto 
 O CineStream permite ao usuário:
